@@ -1,0 +1,1 @@
+sample codes for php practical class
