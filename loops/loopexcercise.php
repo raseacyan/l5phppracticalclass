@@ -1,12 +1,10 @@
 <?php
+$num = 5;
+while($num > 0){
+	$monkey = ($num > 1)? "monkeys": "monkey";
+	echo "{$num} little {$monkey}, jumping on the bed<br>";
+	$num--;
+}
 
-//use while loop
 
-/*
-5 little monkeys, jumping on the bed
-4 little monkeys, jumping on the bed
-3 little monkeys, jumping on the bed
-2 little monkeys, jumping on the bed
-1 little monkey, jumping on the bed
-no more monkeys, jumping on the bed
-*/
+echo "no more monkeys, jumping on the bed";
