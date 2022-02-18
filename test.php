@@ -1,11 +1,10 @@
 <?php
 
-$string = "Hello World";
-$number = 1;
-$bolean = FALSE;
-$null = NULL;
+$shape = 'Square';
+$color = "Red";
 
-var_dump($null);
+
+
 
 
 
