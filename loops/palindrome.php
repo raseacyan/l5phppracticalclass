@@ -66,14 +66,3 @@ for($i = 0; $i< $loop; $i++){
 }
 
 echo ($isPalindrome)?"{$word} is palindrome":"{$word} is  not palindrome";
-
-
-
-
-
-
-
-
-
-
-
