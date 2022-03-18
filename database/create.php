@@ -1,27 +1,38 @@
 <?php
 
 include('connect.php');
+include('functions.php');
 
 if(isset($_POST['create-product'])){
-	echo "<pre>";
-	print_r($_POST);
-	echo "</pre>";
 
-	$name =  $conn->real_escape_string(htmlentities(trim($_POST['name'])));
-	$price =  $conn->real_escape_string(htmlentities(trim($_POST['price'])));
-	$qty =  $conn->real_escape_string(htmlentities(trim($_POST['qty'])));
-	$description =  $conn->real_escape_string(htmlentities(trim($_POST['description'])));
+	//senitize
+	$name = $conn->real_escape_string(htmlentities(trim($_POST['name'])));
+	$price = $conn->real_escape_string(htmlentities(trim($_POST['price'])));
+	$qty = $conn->real_escape_string(htmlentities(trim($_POST['qty'])));
+	$description = $conn->real_escape_string(htmlentities(trim($_POST['description'])));
+	$category = $conn->real_escape_string(htmlentities(trim($_POST['category'])));
 
-	$sql = "INSERT INTO products (name, price, qty, description)
-	VALUES ('{$name}', '{$price}', '{$qty}','{$description}')";
+	$data = array(
+		'name' => $name,
+		'price' =>  $price,
+		'qty' =>  $qty,
+		'description' => $description,
+		'category' =>  $category	
+	);
 
-	if ($conn->query($sql) === TRUE) {
-	  echo "New record created successfully";
-	} else {
-	  echo "Error: " . $sql . "<br>" . $conn->error;
+
+	$table = "products";
+
+	$result = createRecord($table, $data, $conn);
+
+	if($result){
+		header('location:listview.php');
 	}
 
 }
+
+//to get categories
+$categories = getCategories($conn);
 
 ?>
 <!DOCTYPE html>
@@ -30,6 +41,9 @@ if(isset($_POST['create-product'])){
 		<title>Sample</title>
 	</head>
 	<body>
+
+		<h1>Add Product</h1>
+		<p><a href="listview.php">Back to product list</a></p>
 	
 		<form action="create.php" method="post">
 			Name: <br>
@@ -39,9 +53,15 @@ if(isset($_POST['create-product'])){
 			Qty:<br>
 			<input type="number" name="qty" /><br>
 			Description<br>
-			<textarea name="description"></textarea>
+			<textarea name="description"></textarea><br>
+			Category<br>			
+			<select name="category">
+				<?php foreach($categories as $category): ?>
+				<option value="<?php echo $category['id']; ?>"><?php echo $category['name']; ?></option>
+				<?php endforeach; ?>		
+			</select><br><br>
 			<br><br>
-			<input type="submit" name="create-product" value="buy now"/>
+			<input type="submit" name="create-product" value="add"/>
 		</form>
 	</body>
 </html>

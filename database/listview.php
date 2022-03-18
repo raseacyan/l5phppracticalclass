@@ -1,21 +1,8 @@
 <?php
 include('connect.php');
+include('functions.php');
 
-$sql = "SELECT * FROM products";
-$result = $conn->query($sql);
-
-$fruits = array();
-if ($result->num_rows > 0) { 
-  while($row = $result->fetch_assoc()) {
-    array_push($fruits, $row);
-  }
-} 
-
-
-
-$conn->close();
-
-
+$fruits = getProducts($conn);
 
 ?>
 <!DOCTYPE html>
@@ -26,6 +13,8 @@ $conn->close();
 	<body>
 		<h1>Product List</h1>
 
+		<p><a href="create.php">Add Product</a></p>
+
 
 		<?php if($fruits): ?>
 
@@ -35,6 +24,8 @@ $conn->close();
 					<th>Price</th>
 					<th>Qty</th>
 					<th>Description</th>
+					<th>Category</th>
+					<th>Action</th>
 					
 				</tr>
 
@@ -44,6 +35,11 @@ $conn->close();
 					<td><?php echo $fruit['price']; ?></td>
 					<td><?php echo $fruit['qty']; ?></td>
 					<td><?php echo $fruit['description']; ?></td>
+					<td><?php echo $fruit['category_name']; ?></td>
+					<td>
+						<a href="update.php?id=<?php echo $fruit['id'] ?>">Update</a> |
+						<a href="delete.php?id=<?php echo $fruit['id']; ?>">Delete</a>
+					</td>
 					
 				</tr>
 				<?php endforeach; ?>
@@ -61,3 +57,4 @@ $conn->close();
 		
 	</body>
 </html>
+<?php $conn->close(); ?>

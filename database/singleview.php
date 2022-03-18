@@ -1,5 +1,6 @@
 <?php
 include('connect.php');
+include('functions.php');
 
 $id = isset($_GET['id'])? $_GET['id']: 0;
 
@@ -14,7 +15,7 @@ if ($result->num_rows > 0) {
 
 
 
-$conn->close();
+
 
 
 
@@ -26,6 +27,7 @@ $conn->close();
 	</head>
 	<body>
 		<h1>Product</h1>
+		<p><a href="listview.php">Back to product list</a></p>
 
 
 		<?php if($fruit): ?>
@@ -35,9 +37,10 @@ $conn->close();
 		Price: <?php echo $fruit['price']; ?><br>
 		Qty: <?php echo $fruit['qty']; ?><br>
 		Description: <?php echo $fruit['description']; ?><br>
+		Category: <?php echo getCategoryNameById($fruit['category'],$conn); ?><br>
 
-
-		</p>			
+		</p>
+		<p><a href="update.php?id=<?php echo $fruit['id']; ?>">Update This</a></p>			
 
 		<?php else: ?>
 
@@ -50,3 +53,4 @@ $conn->close();
 		
 	</body>
 </html>
+<?php $conn->close(); ?>

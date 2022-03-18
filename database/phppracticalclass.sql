@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 12, 2022 at 02:33 PM
+-- Generation Time: Mar 18, 2022 at 09:38 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -24,6 +24,27 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `categories`
+--
+
+CREATE TABLE `categories` (
+  `id` int(11) NOT NULL,
+  `name` varchar(32) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`id`, `name`) VALUES
+(1, 'Local'),
+(2, 'Import'),
+(3, 'Organic'),
+(4, 'New');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `products`
 --
 
@@ -33,6 +54,7 @@ CREATE TABLE `products` (
   `price` decimal(10,2) NOT NULL,
   `qty` int(11) NOT NULL,
   `description` text NOT NULL,
+  `category` varchar(32) NOT NULL,
   `created_on` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -40,13 +62,22 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `name`, `price`, `qty`, `description`, `created_on`) VALUES
-(1, 'Apple', '10.00', 100, 'Best local apples from chin state', '2022-03-11 08:01:34'),
-(2, 'Strawberry', '5.00', 10, 'Best local strawberry from Pyin Oo Lwin', '2022-03-11 08:04:17');
+INSERT INTO `products` (`id`, `name`, `price`, `qty`, `description`, `category`, `created_on`) VALUES
+(1, 'Apple', '15.00', 200, 'Best local apples from Shan state', '1', '2022-03-11 08:01:34'),
+(2, 'Strawberry', '5.00', 10, 'Best local strawberry from Pyin Oo Lwin', '2', '2022-03-11 08:04:17'),
+(5, 'Mango', '10.00', 100, 'Local Ma Chit Su Mango. Best Quality!', '3', '2022-03-18 07:13:01'),
+(7, 'Pineapple', '7.00', 100, 'Local Pineapples', '4', '2022-03-18 07:25:47'),
+(8, 'test', '1.00', 1, 'test product', '2', '2022-03-18 08:33:17');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `categories`
+--
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `products`
@@ -59,10 +90,16 @@ ALTER TABLE `products`
 --
 
 --
+-- AUTO_INCREMENT for table `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
