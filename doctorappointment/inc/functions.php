@@ -22,11 +22,13 @@ function createRecord($table, $data, $conn){
 	$values = substr($values, 0,-1);
 
 
-
 	$sql = "INSERT INTO {$table} ({$columns}) 
 	VALUES ({$values})";
 
+
+
 	if ($conn->query($sql) === TRUE) {
+	  //$last_id = $conn->insert_id;
 	  return true;
 	} else {
 	  echo "Error: " . $sql . "<br>" . $conn->error;
@@ -65,52 +67,33 @@ function deleteRecord($table, $id, $conn){
 	  return false;
 	}	
 }
-/******************
-@Category
-*******************/
 
-function getCategories($conn){	
-	$sql = "SELECT * FROM categories";
-	$result = $conn->query($sql);
 
-	$data = array();
-	if ($result->num_rows > 0) { 
-	  while($row = $result->fetch_assoc()) {
-	    array_push($data, $row);
-	  }
-	} 
-
-	return $data;
+function redirectTo($url){
+	header("Location:".$url);
 }
 
-function getCategoryNameById($id, $conn){
-	$sql = "SELECT name FROM categories WHERE id={$id}";
+/******************
+@check user
+*******************/
+
+function checkUser($username, $password, $conn){	
+	$sql = "SELECT * FROM users WHERE username='{$username}' AND password = '{$password}'";
+
 	$result = $conn->query($sql);
 	
-	$data;
-	if ($result->num_rows > 0) { 
-	  $row = $result->fetch_assoc();
-	   $data = $row['name'];	 
-	} 
-
-	return $data;	
-}
-
-
-/******************
-@Products
-*******************/
-
-function getProducts($conn){	
-	$sql = "SELECT  products.id, products.name, products.price, products.qty,  products.description, categories.name as category_name FROM products, categories WHERE products.category = categories.id";
-	$result = $conn->query($sql);
-
 	$data = array();
 	if ($result->num_rows > 0) { 
-	  while($row = $result->fetch_assoc()) {
-	    array_push($data, $row);
-	  }
+	   $row = $result->fetch_assoc();
+	   $data = $row; 
+	   return $data;
 	} 
 
-	return $data;
+	return false;	
+}
+
+function adminRedirectIfNotLogin(){
+	if(!isset($_SESSION['username']) && $_SESSION['role'] !== 'admin'){
+	redirectTo('login.php');
+	}
 }
