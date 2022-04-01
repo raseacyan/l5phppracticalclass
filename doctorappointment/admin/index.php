@@ -2,7 +2,9 @@
 session_start();
 include('../inc/functions.php');
 
-adminRedirectIfNotLogin();
+if(!isAdminLogin()){
+	redirectTo("login.php");
+}
 ?>
 
 <!DOCTYPE>

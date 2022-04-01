@@ -92,8 +92,69 @@ function checkUser($username, $password, $conn){
 	return false;	
 }
 
-function adminRedirectIfNotLogin(){
+function isAdminLogin(){
 	if(!isset($_SESSION['username']) && $_SESSION['role'] !== 'admin'){
-	redirectTo('login.php');
+		return false;
+	}else{
+		return true;
 	}
 }
+
+
+function isLogin(){
+	if(!isset($_SESSION['username'])){
+		return false;
+	}else{
+		return true;
+	}
+}
+
+
+/******************
+@Doctor
+*******************/
+
+function getDoctors($conn){	
+	$sql = "SELECT * FROM doctors";
+	$result = $conn->query($sql);
+
+	$data = array();
+	if ($result->num_rows > 0) { 
+	  while($row = $result->fetch_assoc()) {
+	    array_push($data, $row);
+	  }
+	} 
+
+	return $data;
+}
+
+function getDoctorById($id, $conn){
+	$sql = "SELECT * FROM doctors WHERE id={$id}";
+	$result = $conn->query($sql);
+	
+	$data = array();
+	if ($result->num_rows > 0) { 
+	  $row = $result->fetch_assoc();
+	   $data = $row;	
+	} 
+	return $data;	
+}
+
+/******************
+@User
+*******************/
+
+function getUserById($id, $conn){
+	$sql = "SELECT id,username,phone,address FROM users WHERE id={$id}";
+	$result = $conn->query($sql);
+	
+	$data = array();
+	if ($result->num_rows > 0) { 
+	  $row = $result->fetch_assoc();
+	   $data = $row;	
+	} 
+	return $data;	
+}
+
+
+
