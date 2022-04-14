@@ -74,6 +74,38 @@ function redirectTo($url){
 }
 
 /******************
+@Appointments
+*******************/
+function getAppointments($conn){	
+	$sql = "SELECT * FROM appointments as a, doctors as d WHERE a.doctor_id = d.id";
+	$result = $conn->query($sql);
+
+	$data = array();
+	if ($result->num_rows > 0) { 
+	  while($row = $result->fetch_assoc()) {
+	    array_push($data, $row);
+	  }
+	} 
+	return $data;
+}
+
+function getAppointmentsByDateAndDoctorId($date, $doctor_id, $conn){	
+	$sql = "SELECT * FROM appointments as a, doctors as d WHERE a.doctor_id = d.id AND a.appointment_date = '{$date}' AND a.doctor_id = $doctor_id";
+
+	$result = $conn->query($sql);
+
+	$data = array();
+	if ($result->num_rows > 0) { 
+	  while($row = $result->fetch_assoc()) {
+	    array_push($data, $row);
+	  }
+	} 
+	return $data;
+}
+
+
+
+/******************
 @check user
 *******************/
 
@@ -136,6 +168,18 @@ function getDoctorById($id, $conn){
 	if ($result->num_rows > 0) { 
 	  $row = $result->fetch_assoc();
 	   $data = $row;	
+	} 
+	return $data;	
+}
+
+function getDoctorNameById($id, $conn){
+	$sql = "SELECT name FROM doctors WHERE id={$id}";
+	$result = $conn->query($sql);
+	
+	$data = "";
+	if ($result->num_rows > 0) { 
+	  $row = $result->fetch_assoc();
+	   $data = $row['name'];	
 	} 
 	return $data;	
 }

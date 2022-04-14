@@ -10,6 +10,9 @@ if(!isLogin()){
 $id = (isset($_GET['id']))?$_GET['id']:0;
 
 $doctors = getDoctors($conn);
+
+display($doctors);
+
 $user = getUserById($_SESSION['user_id'],$conn);
 
 
