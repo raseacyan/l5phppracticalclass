@@ -3,7 +3,7 @@ session_start();
 include('../inc/connection.php');
 include('../inc/functions.php');
 
-if(!isAdminLogin()){
+if(!isLogin()){
 	redirectTo("login.php");
 }
 
@@ -13,7 +13,7 @@ $course = getCourseById($id, $conn);
 
 $students = getEnrolledStudentsByCourseId($course['id'], $conn);
 
-
+$resources = getResourcesByCourseId($course['id'], $conn);
 
 ?>
 
@@ -30,6 +30,9 @@ $students = getEnrolledStudentsByCourseId($course['id'], $conn);
 	<strong>Teacher:</strong>	<br>
 	<?php echo $course['teacher_name']; ?> <br>
 </p>
+
+<hr>
+
 
 <h3>Enrolled Students</h3>
 
@@ -57,7 +60,33 @@ $students = getEnrolledStudentsByCourseId($course['id'], $conn);
 
 <?php endif ?>
 
+<hr>
 
+<h3>Resources</h3>
+
+<?php if($resources): ?>
+
+	<table cellspacing="10" cellpadding="10">
+		<tr>
+			<th>Link</th>			
+			<th>Created On</th>			
+		</tr>
+
+		<?php foreach($resources as $resource): ?>
+		<tr>
+			<td><a href="<?php echo $resource['link']; ?>">💾 Download</a></td>		
+			<td><?php echo $resource['created_on']; ?></td>			
+			
+		</tr>
+		<?php endforeach; ?>
+
+	</table>
+
+<?php else: ?>
+
+	<p>No Records</p>
+
+<?php endif ?>
 
 </body>
 </html>

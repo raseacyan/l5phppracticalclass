@@ -10,11 +10,7 @@ if(!isAdminLogin()){
 $id = (isset($_GET['id']))?$_GET['id']:0;
 
 $course = getCourseById($id, $conn);
-
-$students = getEnrolledStudentsByCourseId($course['id'], $conn);
-
-
-
+$resources = getResourcesByCourseId($course['id'], $conn);
 ?>
 
 <!DOCTYPE>
@@ -31,20 +27,20 @@ $students = getEnrolledStudentsByCourseId($course['id'], $conn);
 	<?php echo $course['teacher_name']; ?> <br>
 </p>
 
-<h3>Enrolled Students</h3>
+<h3>Resources</h3>
 
-<?php if($students): ?>
+<?php if($resources): ?>
 
 	<table cellspacing="10" cellpadding="10">
 		<tr>
-			<th>Name</th>			
-			<th>Email</th>			
+			<th>Link</th>			
+			<th>Created On</th>			
 		</tr>
 
-		<?php foreach($students as $student): ?>
+		<?php foreach($resources as $resource): ?>
 		<tr>
-			<td><?php echo $student['username']; ?></td>		
-			<td><?php echo $student['email']; ?></td>			
+			<td><a href="<?php echo $resource['link']; ?>">💾 Download</a></td>		
+			<td><?php echo $resource['created_on']; ?></td>			
 			
 		</tr>
 		<?php endforeach; ?>

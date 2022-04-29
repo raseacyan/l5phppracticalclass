@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 22, 2022 at 01:26 PM
+-- Generation Time: Apr 29, 2022 at 11:32 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -60,7 +60,52 @@ CREATE TABLE `courses` (
 
 INSERT INTO `courses` (`id`, `title`, `description`, `teacher_id`) VALUES
 (2, 'Practical PHP', 'Learn PHP\r\nFriday 1pm - 3pm', 1),
-(3, 'Java Beginner', 'Learn Java\r\nSat 10am-12am', 2);
+(3, 'Java Beginner', 'Learn Java\r\nSat 10am-12am', 2),
+(4, 'Advance Java', 'Advance Java  Course', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `enrolments`
+--
+
+CREATE TABLE `enrolments` (
+  `id` int(11) NOT NULL,
+  `enrollment_date` date NOT NULL DEFAULT current_timestamp(),
+  `student_id` int(11) NOT NULL,
+  `course_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `enrolments`
+--
+
+INSERT INTO `enrolments` (`id`, `enrollment_date`, `student_id`, `course_id`) VALUES
+(3, '2022-04-29', 1, 2),
+(7, '2022-04-29', 1, 3),
+(8, '2022-04-29', 2, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `resources`
+--
+
+CREATE TABLE `resources` (
+  `id` int(11) NOT NULL,
+  `link` varchar(255) NOT NULL,
+  `course_id` int(11) NOT NULL,
+  `teacher_id` int(11) NOT NULL,
+  `created_on` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `resources`
+--
+
+INSERT INTO `resources` (`id`, `link`, `course_id`, `teacher_id`, `created_on`) VALUES
+(1, 'https://drive.google.com/file/d/1jd86IQuvL-E_xyOVrdFV_ucu_oSG0h-g/view?usp=sharing', 2, 1, '2022-04-29 09:11:52'),
+(2, 'https://drive.google.com/file/d/10_5EY3AtIx_WNgLXLdCCyQZWYF6NVzGk/view?usp=sharing', 2, 1, '2022-04-29 09:12:17');
 
 -- --------------------------------------------------------
 
@@ -122,6 +167,18 @@ ALTER TABLE `courses`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `enrolments`
+--
+ALTER TABLE `enrolments`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `resources`
+--
+ALTER TABLE `resources`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `students`
 --
 ALTER TABLE `students`
@@ -147,7 +204,19 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `enrolments`
+--
+ALTER TABLE `enrolments`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `resources`
+--
+ALTER TABLE `resources`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `students`

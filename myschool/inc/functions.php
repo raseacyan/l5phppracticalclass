@@ -158,6 +158,34 @@ function getCourses($conn){
 	return $data;
 }
 
+function getCoursesByStudentId($student_id, $conn){	
+	$sql = "SELECT c.id, c.title, c.description FROM courses as c, enrolments as e WHERE c.id=e.course_id AND e.student_id={$student_id} ";
+	$result = $conn->query($sql);
+
+	$data = array();
+	if ($result->num_rows > 0) { 
+	  while($row = $result->fetch_assoc()) {
+	    array_push($data, $row);
+	  }
+	} 
+
+	return $data;
+}
+
+function getCoursesByTeacherId($teacher_id, $conn){	
+	$sql = "SELECT c.id, c.title, c.description FROM courses as c WHERE c.teacher_id={$teacher_id} ";
+	$result = $conn->query($sql);
+
+	$data = array();
+	if ($result->num_rows > 0) { 
+	  while($row = $result->fetch_assoc()) {
+	    array_push($data, $row);
+	  }
+	} 
+
+	return $data;
+}
+
 function getCourseById($id, $conn){
 	$sql = "SELECT c.id, c.title, c.description, t.username as teacher_name FROM courses as c, teachers as t WHERE c.teacher_id = t.id AND c.id={$id}";
 	$result = $conn->query($sql);
@@ -185,6 +213,18 @@ function getStudents($conn){
 	} 
 
 	return $data;
+}
+
+function getStudentById($id, $conn){
+	$sql = "SELECT s.id, s.username, s.email as teacher_name FROM students as s WHERE s.id={$id}";
+	$result = $conn->query($sql);
+	
+	$data = array();
+	if ($result->num_rows > 0) { 
+	  $row = $result->fetch_assoc();
+	   $data = $row;	
+	} 
+	return $data;	
 }
 
 
@@ -246,5 +286,48 @@ function getUserById($id, $conn){
 	return $data;	
 }
 
+/******************
+@Enrolment
+*******************/
+function isEnrolled($student_id, $course_id, $conn){
+	$sql = "SELECT id FROM enrolments WHERE student_id={$student_id} AND course_id={$course_id}";
+	
+	$result = $conn->query($sql);	
+
+	if ($result->num_rows > 0) { 
+	   return  true;
+	} 
+	return false;	
+}
+
+function getEnrolledStudentsByCourseId($course_id, $conn){
+	$sql = "SELECT s.id, s.username, s.email FROM enrolments as e, students as s WHERE e.student_id=s.id AND e.course_id={$course_id}";
+	$result = $conn->query($sql);
+ 
+	$data = array();
+	if ($result->num_rows > 0) { 
+	  while($row = $result->fetch_assoc()) {
+	    array_push($data, $row);
+	  }
+	}
+	return $data;
+}
+
+/******************
+@Resources
+*******************/
+function getResourcesByCourseId($course_id, $conn){	
+	$sql = "SELECT * FROM resources WHERE course_id={$course_id}";
+	$result = $conn->query($sql);
+
+	$data = array();
+	if ($result->num_rows > 0) { 
+	  while($row = $result->fetch_assoc()) {
+	    array_push($data, $row);
+	  }
+	} 
+
+	return $data;
+}
 
 
