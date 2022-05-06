@@ -9,10 +9,6 @@ if(!isAdminLogin()){
 
 $courses = getCoursesByTeacherId($_SESSION['user_id'], $conn);
 
-$resources = getResourcesByCourseId($course['id'], $conn);
-
-
-
 ?>
 
 <!DOCTYPE>
@@ -41,7 +37,8 @@ $resources = getResourcesByCourseId($course['id'], $conn);
 			<td><a href="course_single.php?id=<?php echo $course['id']; ?>"><?php echo $course['title']; ?></a></td>		
 			<td><?php echo $course['description']; ?></a></td>
 			<td>	   
-				<a href="add_resource_form.php?id=<?php echo $course['id']; ?>">Add Resource</a>
+				<a href="add_resource_form.php?id=<?php echo $course['id']; ?>">Add Resource</a> | 
+				<a href="class_create.php?id=<?php echo $course['id']; ?>">Add Class</a>
 				
 			</td>
 			

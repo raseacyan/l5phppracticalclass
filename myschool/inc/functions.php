@@ -330,4 +330,53 @@ function getResourcesByCourseId($course_id, $conn){
 	return $data;
 }
 
+/******************
+@Classes
+*******************/
+function getClassesByCourseId($course_id, $conn){	
+	$sql = "SELECT * FROM classes WHERE course_id={$course_id}";
+	$result = $conn->query($sql);
+
+	$data = array();
+	if ($result->num_rows > 0) { 
+	  while($row = $result->fetch_assoc()) {
+	    array_push($data, $row);
+	  }
+	} 
+
+	return $data;
+}
+
+function getClassByClassId($id, $conn){
+	$sql = "SELECT * FROM classes WHERE id={$id}";
+	$result = $conn->query($sql);
+	
+	$data = array();
+	if ($result->num_rows > 0) { 
+	  $row = $result->fetch_assoc();
+	   $data = $row;	
+	} 
+	return $data;	
+}
+
+/******************
+@Attendance
+*******************/
+
+function getAttendancesByClassId($id, $conn){
+	$sql = "SELECT c.date, cr.title, s.username, a.status FROM attendances as a, students as s, classes as c, courses as cr WHERE a.student_id = s.id AND a.class_id = c.id AND c.course_id = cr.id AND class_id={$id}";
+
+	
+	$result = $conn->query($sql);
+	
+	$data = array();
+	if ($result->num_rows > 0) { 
+	  while($row = $result->fetch_assoc()) {
+	    array_push($data, $row);
+	  }
+	} 
+
+
+	return $data;
+}
 

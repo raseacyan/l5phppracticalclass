@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 29, 2022 at 11:32 AM
+-- Generation Time: May 06, 2022 at 10:24 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -40,6 +40,57 @@ CREATE TABLE `admin` (
 
 INSERT INTO `admin` (`id`, `username`, `email`, `password`) VALUES
 (1, 'Admin', 'admin@test.com', 'cc03e747a6afbbcbf8be7668acfebee5');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `attendances`
+--
+
+CREATE TABLE `attendances` (
+  `id` int(11) NOT NULL,
+  `student_id` int(11) NOT NULL,
+  `class_id` int(11) NOT NULL,
+  `status` varchar(8) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `attendances`
+--
+
+INSERT INTO `attendances` (`id`, `student_id`, `class_id`, `status`) VALUES
+(1, 1, 5, 'present'),
+(2, 2, 5, 'present'),
+(3, 3, 5, 'present'),
+(4, 4, 5, 'absent'),
+(5, 1, 6, 'absent'),
+(6, 2, 6, 'absent'),
+(7, 3, 6, 'present'),
+(8, 4, 6, 'present');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `classes`
+--
+
+CREATE TABLE `classes` (
+  `id` int(11) NOT NULL,
+  `date` date NOT NULL,
+  `time` varchar(32) NOT NULL,
+  `topic` varchar(255) NOT NULL,
+  `link` varchar(255) NOT NULL,
+  `venue` varchar(32) NOT NULL,
+  `course_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `classes`
+--
+
+INSERT INTO `classes` (`id`, `date`, `time`, `topic`, `link`, `venue`, `course_id`) VALUES
+(5, '2022-05-06', '10am-12pm', 'Lesson 1', 'https://meet.google.com/jip-hhgg-dys', 'online', 2),
+(6, '2022-05-13', '10am-12pm', 'Lesson 2', 'https://youtu.be/x813wjTyd3Q', 'pre-recorded', 2);
 
 -- --------------------------------------------------------
 
@@ -83,7 +134,9 @@ CREATE TABLE `enrolments` (
 INSERT INTO `enrolments` (`id`, `enrollment_date`, `student_id`, `course_id`) VALUES
 (3, '2022-04-29', 1, 2),
 (7, '2022-04-29', 1, 3),
-(8, '2022-04-29', 2, 2);
+(8, '2022-04-29', 2, 2),
+(9, '2022-05-06', 3, 2),
+(10, '2022-05-06', 4, 2);
 
 -- --------------------------------------------------------
 
@@ -126,7 +179,9 @@ CREATE TABLE `students` (
 
 INSERT INTO `students` (`id`, `username`, `email`, `password`) VALUES
 (1, 'Zaw Zaw', 'zawzaw@test.com', 'cc03e747a6afbbcbf8be7668acfebee5'),
-(2, 'Su Su', 'susu@test.com', 'cc03e747a6afbbcbf8be7668acfebee5');
+(2, 'Su Su', 'susu@test.com', 'cc03e747a6afbbcbf8be7668acfebee5'),
+(3, 'Kyaw Kyaw', 'kyawkyaw@test.com', 'cc03e747a6afbbcbf8be7668acfebee5'),
+(4, 'Hla Hla', 'hlahla@test.com', 'cc03e747a6afbbcbf8be7668acfebee5');
 
 -- --------------------------------------------------------
 
@@ -158,6 +213,18 @@ INSERT INTO `teachers` (`id`, `username`, `position`, `email`, `password`) VALUE
 -- Indexes for table `admin`
 --
 ALTER TABLE `admin`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `attendances`
+--
+ALTER TABLE `attendances`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `classes`
+--
+ALTER TABLE `classes`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -201,6 +268,18 @@ ALTER TABLE `admin`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `attendances`
+--
+ALTER TABLE `attendances`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `classes`
+--
+ALTER TABLE `classes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
@@ -210,7 +289,7 @@ ALTER TABLE `courses`
 -- AUTO_INCREMENT for table `enrolments`
 --
 ALTER TABLE `enrolments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `resources`
@@ -222,7 +301,7 @@ ALTER TABLE `resources`
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `teachers`
